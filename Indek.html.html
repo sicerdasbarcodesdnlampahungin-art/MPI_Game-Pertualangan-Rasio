@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Game Pembelajaran Rasio - SD Negeri Lampahungin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f0fdf4;
+        }
+        .font-fredoka {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+        .btn-bounce {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn-bounce:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+        }
+        .btn-bounce:active {
+            transform: translateY(1px);
+        }
+        .pulse-slow {
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 via-teal-50 to-sky-100 min-h-screen text-slate-800 flex flex-col justify-between selection:bg-amber-200">
+
+    <!-- HEADER APP -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-emerald-100 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-tr from-emerald-500 to-teal-400 text-white p-2.5 rounded-2xl shadow-md shadow-emerald-200 flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C20.832 18.477 19.247 18 17.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-0.5 rounded-full">SD NEGERI LAMPAHUNGIN</span>
+                    <h1 class="text-base sm:text-lg font-bold text-slate-800 font-fredoka leading-tight">Matematika Kelas VI</h1>
+                </div>
+            </div>
+
+            <!-- Controls (Audio BGM Toggle) -->
+            <div class="flex items-center gap-2">
+                <button id="bgmToggleBtn" onclick="toggleBGM()" class="flex items-center gap-2 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs sm:text-sm font-semibold px-3.5 py-2 rounded-xl transition border border-amber-300 shadow-sm">
+                    <span id="bgmIcon">🎵</span>
+                    <span id="bgmStatus" class="hidden sm:inline">Musik: On</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-4xl mx-auto px-4 py-6 w-full flex-grow flex flex-col justify-center">
+
+        <!-- VIEW 1: HOME SCREEN -->
+        <section id="viewHome" class="space-y-6 animate-fade-in">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-emerald-900/5 border border-emerald-100 text-center relative overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-teal-100 rounded-full blur-2xl opacity-60"></div>
+                <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-amber-100 rounded-full blur-2xl opacity-60"></div>
+
+                <div class="relative z-10">
+                    <span class="inline-block bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs sm:text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-3 shadow-sm">
+                        Game Pembelajaran Interaktif
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-800 font-fredoka mb-2">
+                        Bab 2: Rasio
+                    </h2>
+                    <p class="text-slate-600 font-medium text-sm sm:text-base max-w-xl mx-auto mb-6">
+                        Selamat Datang Peserta Didik Kelas VI SD Negeri Lampahungin! Mari belajar konsep rasio dan kesamaan rasio dengan cara yang menyenangkan!
+                    </p>
+
+                    <!-- Information Cards Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-8">
+                        <div class="bg-emerald-50/80 p-4 rounded-2xl border border-emerald-200/60">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-xl">📚</span>
+                                <h3 class="font-bold text-emerald-900 text-sm">Materi Pembahasan</h3>
+                            </div>
+                            <p class="text-xs sm:text-sm text-emerald-800">Konsep Rasio yaitu membandingkan dua kelompok benda.</p>
+                        </div>
+
+                        <div class="bg-sky-50/80 p-4 rounded-2xl border border-sky-200/60">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-xl">🎯</span>
+                                <h3 class="font-bold text-sky-900 text-sm">Tujuan Pembelajaran</h3>
+                            </div>
+                            <p class="text-xs sm:text-sm text-sky-800">Menentukan kesamaan rasio dengan menggunakan tabel rasio.</p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button onclick="switchView('viewMaterial')" class="w-full sm:w-auto btn-bounce bg-teal-600 hover:bg-teal-700 text-white font-bold px-7 py-3.5 rounded-2xl shadow-lg shadow-teal-600/30 flex items-center justify-center gap-2">
+                            <span>📖 Pelajari Materi Lengkap</span>
+                        </button>
+                        <button onclick="startGame()" class="w-full sm:w-auto btn-bounce bg-amber-500 hover:bg-amber-600 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2 text-lg">
+                            <span>🎮 Mulai Game (20 Soal)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: MATERIAL LESSON SCREEN -->
+        <section id="viewMaterial" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-emerald-900/5 border border-emerald-100">
+                <!-- Material Header -->
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                    <div class="flex items-center gap-3">
+                        <button onclick="switchView('viewHome')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 p-2 rounded-xl transition font-semibold text-xs flex items-center gap-1">
+                            ⬅️ Kembali
+                        </button>
+                        <h2 class="text-xl sm:text-2xl font-bold font-fredoka text-slate-800">Ringkasan Materi Rasio</h2>
+                    </div>
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Kelas VI</span>
+                </div>
+
+                <!-- Content Body -->
+                <div class="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed">
+                    <!-- Section 1: Definition -->
+                    <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-200">
+                        <h3 class="font-bold text-amber-900 text-base sm:text-lg mb-2 flex items-center gap-2">
+                            <span>📌</span> 1. Apa itu Rasio?
+                        </h3>
+                        <p class="text-slate-700">
+                            <strong>Rasio</strong> adalah cara membandingkan dua besaran atau dua kelompok benda. Rasio menunjukkan perbandingan banyaknya suatu benda dengan benda lainnya.
+                        </p>
+                    </div>
+
+                    <!-- Section 2: 3 Ways of Writing Ratio -->
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base sm:text-lg mb-3 flex items-center gap-2">
+                            <span>✍️</span> 2. Tiga (3) Cara Penulisan Rasio:
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                            <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200 font-medium">
+                                <span class="block text-xs text-emerald-600 font-bold mb-1">CARA 1</span>
+                                Menggunakan kata<br><span class="font-bold text-emerald-900">"dibandingkan dengan"</span>
+                            </div>
+                            <div class="bg-sky-50 p-3.5 rounded-2xl border border-sky-200 font-medium">
+                                <span class="block text-xs text-sky-600 font-bold mb-1">CARA 2</span>
+                                Menggunakan tanda<br><span class="font-bold text-sky-900">titik dua ( : )</span>
+                            </div>
+                            <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-200 font-medium">
+                                <span class="block text-xs text-indigo-600 font-bold mb-1">CARA 3</span>
+                                Menggunakan bentuk<br><span class="font-bold text-indigo-900">pecahan (a/b)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Concrete Example -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <h3 class="font-bold text-slate-800 text-base sm:text-lg mb-3 flex items-center gap-2">
+                            <span>✏️</span> Contoh Konkrit:
+                        </h3>
+                        <p class="mb-3">Di dalam sebuah kotak terdapat <strong>4 pensil merah</strong> dan <strong>6 pensil biru</strong>.</p>
+
+                        <!-- Visual representation -->
+                        <div class="flex flex-wrap items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 my-3 justify-center">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs font-bold text-red-600">Pensil Merah:</span>
+                                <div class="flex gap-1 text-lg">✏️✏️✏️✏️</div>
+                            </div>
+                            <span class="text-slate-300">|</span>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs font-bold text-blue-600">Pensil Biru:</span>
+                                <div class="flex gap-1 text-lg">✏️✏️✏️✏️✏️✏️</div>
+                            </div>
+                        </div>
+
+                        <p class="text-sm">
+                            Perbandingan pensil merah dengan pensil biru adalah: <strong class="text-emerald-700">4 : 6</strong> atau <strong class="text-emerald-700">4/6</strong>.
+                        </p>
+                        <p class="text-sm mt-2">
+                            Rasio tersebut dapat disederhanakan (dibagi 2) menjadi: <strong class="bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-bold">2 : 3</strong>.
+                        </p>
+                        <p class="text-xs text-slate-500 mt-1">
+                            *Artinya: Setiap 2 pensil merah dibandingkan dengan 3 pensil biru.
+                        </p>
+                    </div>
+
+                    <!-- Section 4: Ratio Table -->
+                    <div class="bg-teal-50/80 p-5 rounded-2xl border border-teal-200">
+                        <h3 class="font-bold text-teal-950 text-base sm:text-lg mb-2 flex items-center gap-2">
+                            <span>📊</span> 4. Menentukan Kesamaan Rasio dengan Tabel Rasio
+                        </h3>
+                        <p class="text-sm text-teal-900 mb-3">
+                            Kesamaan rasio adalah dua atau lebih perbandingan yang memiliki nilai perbandingan yang sama.
+                        </p>
+
+                        <!-- Ratio Table Display -->
+                        <div class="overflow-x-auto my-3">
+                            <table class="w-full text-center border-collapse bg-white rounded-xl overflow-hidden shadow-sm text-sm">
+                                <thead>
+                                    <tr class="bg-teal-600 text-white font-bold">
+                                        <th class="p-2.5 border border-teal-700">Pensil Merah</th>
+                                        <th class="p-2.5 border border-teal-700">Pensil Biru</th>
+                                        <th class="p-2.5 border border-teal-700">Keterangan Perkalian</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 font-semibold text-slate-700">
+                                    <tr class="bg-amber-50/50">
+                                        <td class="p-2 border font-bold text-red-600">2</td>
+                                        <td class="p-2 border font-bold text-blue-600">3</td>
+                                        <td class="p-2 border text-xs text-slate-500">Rasio Dasar (2 : 3)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-bold text-red-600">4</td>
+                                        <td class="p-2 border font-bold text-blue-600">6</td>
+                                        <td class="p-2 border text-xs text-emerald-600 font-bold">× 2 (2×2 : 3×2)</td>
+                                    </tr>
+                                    <tr class="bg-amber-50/50">
+                                        <td class="p-2 border font-bold text-red-600">6</td>
+                                        <td class="p-2 border font-bold text-blue-600">9</td>
+                                        <td class="p-2 border text-xs text-emerald-600 font-bold">× 3 (2×3 : 3×3)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-bold text-red-600">8</td>
+                                        <td class="p-2 border font-bold text-blue-600">12</td>
+                                        <td class="p-2 border text-xs text-emerald-600 font-bold">× 4 (2×4 : 3×4)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p class="text-xs sm:text-sm text-teal-900 font-medium">
+                            Dari tabel di atas dapat dilihat bahwa: <strong class="bg-white px-2 py-1 rounded border border-teal-300">2 : 3 = 4 : 6 = 6 : 9 = 8 : 12</strong>. Rasio tersebut sama karena jumlah kedua benda bertambah dengan perbandingan yang tetap.
+                        </p>
+                    </div>
+
+                    <!-- Section 5: Summary -->
+                    <div class="bg-emerald-600 text-white p-5 rounded-2xl shadow-md">
+                        <h3 class="font-bold text-base sm:text-lg mb-2 flex items-center gap-2">
+                            <span>💡</span> Kesimpulan
+                        </h3>
+                        <p class="text-sm leading-relaxed text-emerald-50">
+                            Rasio digunakan untuk membandingkan dua besaran. Tabel rasio membantu kita melihat hubungan dua besaran dan menentukan apakah beberapa rasio memiliki nilai yang sama. Jika kedua bilangan dalam rasio dikalikan atau dibagi dengan bilangan yang sama, maka diperoleh rasio yang setara atau sama.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bottom Button -->
+                <div class="mt-8 pt-4 border-t border-slate-100 flex justify-between items-center">
+                    <button onclick="switchView('viewHome')" class="btn-bounce bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold px-5 py-2.5 rounded-xl text-sm">
+                        ⬅️ Kembali ke Menu
+                    </button>
+                    <button onclick="startGame()" class="btn-bounce bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow-md">
+                        Siap Main Game 🎮
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: GAME QUIZ SCREEN -->
+        <section id="viewQuiz" class="hidden space-y-4">
+            <!-- Quiz Top Header Bar -->
+            <div class="bg-white p-4 rounded-2xl shadow-md border border-emerald-100 flex items-center justify-between">
+                <button onclick="confirmExitGame()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1">
+                    🚪 Kembali
+                </button>
+                <div class="flex items-center gap-3">
+                    <span id="quizProgressText" class="text-xs font-bold text-slate-600">Soal 1 dari 20</span>
+                    <div class="w-28 sm:w-40 bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+                        <div id="quizProgressBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+                <div class="bg-amber-100 text-amber-900 font-extrabold px-3 py-1 rounded-xl text-xs sm:text-sm">
+                    Skor: <span id="quizScoreText">0</span>
+                </div>
+            </div>
+
+            <!-- Main Question Card -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-emerald-900/5 border border-emerald-100 min-h-[360px] flex flex-col justify-between">
+                <div>
+                    <!-- Badge tag -->
+                    <div class="flex items-center justify-between mb-4">
+                        <span id="questionCategory" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">
+                            Konsep Rasio
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Pilih Jawaban yang Tepat</span>
+                    </div>
+
+                    <!-- Question Text -->
+                    <h3 id="questionText" class="text-base sm:text-xl font-bold text-slate-800 mb-4 leading-snug">
+                        Memuat pertanyaan...
+                    </h3>
+
+                    <!-- Optional Illustration / Table Area -->
+                    <div id="questionVisual" class="mb-6 hidden">
+                        <!-- Dynamic Visual or Table injected here -->
+                    </div>
+                </div>
+
+                <!-- Answer Options Grid -->
+                <div id="optionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                    <!-- Dynamic option buttons -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 4: FINAL SCORE & REVIEW SCREEN -->
+        <section id="viewResult" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-emerald-900/5 border border-emerald-100 text-center">
+                <!-- Trophy Icon & Badge -->
+                <div class="inline-block bg-amber-100 p-4 rounded-full mb-3 text-4xl">
+                    🏆
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800 font-fredoka">
+                    Hasil Permainan Kamu!
+                </h2>
+                <p class="text-slate-500 text-xs sm:text-sm mt-1">
+                    SD Negeri Lampahungin - Kelas VI Matematika Bab 2
+                </p>
+
+                <!-- Stars Display -->
+                <div id="starsContainer" class="flex justify-center gap-2 text-3xl sm:text-4xl my-4">
+                    <span>⭐</span><span>⭐</span><span>⭐</span>
+                </div>
+
+                <!-- Big Score Display -->
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-6 rounded-3xl max-w-sm mx-auto shadow-lg shadow-emerald-500/20 my-4">
+                    <span class="text-xs uppercase font-bold tracking-widest text-emerald-100 block mb-1">SKOR AKHIR</span>
+                    <div class="text-5xl font-extrabold font-fredoka">
+                        <span id="finalScoreVal">0</span> <span class="text-2xl opacity-80">/ 100</span>
+                    </div>
+                    <p id="finalPercentageText" class="text-xs text-emerald-100 mt-2 font-semibold">
+                        Menjawab benar 0 dari 20 soal (0%)
+                    </p>
+                </div>
+
+                <!-- Motivational Message -->
+                <p id="finalMotivationText" class="text-sm sm:text-base font-bold text-slate-700 max-w-md mx-auto mb-6">
+                    Kerja bagus! Teruslah berlatih untuk menjadi ahli rasio!
+                </p>
+
+                <!-- Action buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="startGame()" class="btn-bounce bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-2xl shadow-md text-sm">
+                        🔄 Main Lagi
+                    </button>
+                    <button onclick="switchView('viewHome')" class="btn-bounce bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold px-6 py-3 rounded-2xl text-sm">
+                        🏠 Beranda
+                    </button>
+                    <a href="#reviewSection" class="btn-bounce bg-teal-600 hover:bg-teal-700 text-white font-bold px-6 py-3 rounded-2xl shadow-md text-sm">
+                        📋 Lihat Pembahasan
+                    </a>
+                </div>
+            </div>
+
+            <!-- Full Review Section -->
+            <div id="reviewSection" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100">
+                <h3 class="text-lg sm:text-xl font-bold font-fredoka text-slate-800 mb-4 pb-3 border-b border-slate-100 flex items-center justify-between">
+                    <span>📝 Pembahasan 20 Soal</span>
+                    <span class="text-xs font-normal text-slate-500">Pahami setiap jawaban</span>
+                </h3>
+
+                <div id="reviewContainer" class="space-y-4 text-sm">
+                    <!-- Dynamic review items generated here -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white/80 border-t border-slate-200 py-3 text-center text-xs text-slate-500 mt-6">
+        <p>© SD Negeri Lampahungin - Media Pembelajaran Matematika Kelas VI</p>
+    </footer>
+
+    <script>
+        // ==========================================
+        // AUDIO SYNTHESIZER & SPEECH CONTROLLER
+        // ==========================================
+        let audioCtx = null;
+        let isBgmPlaying = false;
+        let bgmTimer = null;
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Voice Feedback using Web Speech API
+        function speakFeedback(text) {
+            try {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel(); // Stop any active speech
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'id-ID';
+                    utterance.rate = 1.0;
+                    utterance.pitch = 1.2; // Friendly slightly higher pitch for kids
+                    window.speechSynthesis.speak(utterance);
+                }
+            } catch (e) {
+                console.log("Speech API not supported or blocked");
+            }
+        }
+
+        // Web Audio API Sound Effects
+        function playSFX(type) {
+            initAudioContext();
+            if (!audioCtx) return;
+
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                // Happy arpeggio ding-ding
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                osc.frequency.setValueAtTime(1046.50, now + 0.3); // C6
+                
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+                
+                osc.start(now);
+                osc.stop(now + 0.6);
+            } else if (type === 'wrong') {
+                // Gentle soft error buzz
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(220, now); // A3
+                osc.frequency.setValueAtTime(180, now + 0.15);
+                
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                
+                osc.start(now);
+                osc.stop(now + 0.4);
+            }
+        }
+
+        // Background Music Synth Generator (Looping gentle pentatonic melody)
+        const bgmNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25]; // C, D, E, G, A, C5
+        let noteIndex = 0;
+
+        function playBgmNote() {
+            if (!isBgmPlaying || !audioCtx) return;
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            const freq = bgmNotes[noteIndex % bgmNotes.length];
+            osc.frequency.setValueAtTime(freq, now);
+
+            gain.gain.setValueAtTime(0.03, now); // Low comfortable background volume
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.6);
+
+            noteIndex = (noteIndex + 1) % bgmNotes.length;
+        }
+
+        function toggleBGM() {
+            initAudioContext();
+            isBgmPlaying = !isBgmPlaying;
+
+            const bgmStatus = document.getElementById('bgmStatus');
+            const bgmIcon = document.getElementById('bgmIcon');
+
+            if (isBgmPlaying) {
+                bgmStatus.innerText = "Musik: On";
+                bgmIcon.innerText = "🎵";
+                if (bgmTimer) clearInterval(bgmTimer);
+                bgmTimer = setInterval(playBgmNote, 500);
+            } else {
+                bgmStatus.innerText = "Musik: Off";
+                bgmIcon.innerText = "🔇";
+                if (bgmTimer) clearInterval(bgmTimer);
+            }
+        }
+
+        // ==========================================
+        // 20 INTERACTIVE QUESTIONS DATA BANK
+        // ==========================================
+        const quizQuestions = [
+            {
+                id: 1,
+                category: "Konsep Rasio",
+                question: "Di dalam kelas terdapat 3 buah apel merah dan 5 buah jeruk kuning. Penulisan rasio apel dibanding jeruk yang tepat adalah...",
+                options: ["3 : 5", "5 : 3", "3 + 5", "3 × 5"],
+                answer: 0,
+                visual: `<div class="p-3 bg-amber-50 rounded-xl flex justify-center gap-6 items-center text-2xl">
+                            <div>🍎🍎🍎</div><span class="text-sm font-bold text-slate-400">dibanding</span><div>🍊🍊🍊🍊🍊</div>
+                        </div>`,
+                explanation: "Rasio membandingkan jumlah benda pertama (3 apel) terhadap benda kedua (5 jeruk), disimbolkan dengan titik dua (3 : 5)."
+            },
+            {
+                id: 2,
+                category: "Menyederhanakan Rasio",
+                question: "Bentuk paling sederhana dari rasio 4 : 8 adalah...",
+                options: ["1 : 2", "2 : 1", "1 : 4", "2 : 3"],
+                answer: 0,
+                explanation: "Membagi kedua angka dengan 4: (4÷4) : (8÷4) = 1 : 2."
+            },
+            {
+                id: 3,
+                category: "Bentuk Penulisan",
+                question: "Manakah di bawah ini yang BUKAN merupakan cara penulisan rasio?",
+                options: ["4 dibanding 6", "4 : 6", "4 / 6", "4 + 6"],
+                answer: 3,
+                explanation: "Penulisan rasio menggunakan kata 'dibandingkan dengan', titik dua (:), atau bentuk pecahan (a/b). Penjumlahan (+) bukan rasio."
+            },
+            {
+                id: 4,
+                category: "Konsep Pensil",
+                question: "Kotak pensil berisi 4 pensil merah dan 6 pensil biru. Berapakah rasio pensil merah terhadap pensil biru yang disederhanakan?",
+                options: ["4 : 6", "2 : 3", "3 : 2", "1 : 2"],
+                answer: 1,
+                visual: `<div class="p-3 bg-slate-50 rounded-xl flex justify-center gap-4 text-base font-semibold">
+                            <span class="text-red-600">Pensil Merah: 4</span> | <span class="text-blue-600">Pensil Biru: 6</span>
+                        </div>`,
+                explanation: "Rasio awal 4 : 6 disederhanakan dengan membagi 2 pada kedua bagian, menjadi 2 : 3."
+            },
+            {
+                id: 5,
+                category: "Tabel Rasio",
+                question: "Jika rasio dasar adalah 2 : 3, berapakah hasilnya jika kedua bilangan dikalikan dengan 2?",
+                options: ["4 : 6", "3 : 4", "4 : 5", "2 : 6"],
+                answer: 0,
+                explanation: "(2 × 2) : (3 × 2) = 4 : 6."
+            },
+            {
+                id: 6,
+                category: "Tabel Rasio",
+                question: "Perhatikan tabel rasio berikut: [2:3, 4:6, 6:9, X:12]. Nilai X yang tepat untuk mengisi tabel kesamaan rasio tersebut adalah...",
+                options: ["7", "8", "9", "10"],
+                answer: 1,
+                visual: `<div class="p-3 bg-teal-50 rounded-xl text-center text-sm font-bold text-teal-900">
+                            2 : 3 = 4 : 6 = 6 : 9 = <span class="bg-amber-200 px-2 py-0.5 rounded text-red-600">X</span> : 12
+                        </div>`,
+                explanation: "Angka kedua adalah 12 (3 × 4). Maka X didapat dari 2 × 4 = 8."
+            },
+            {
+                id: 7,
+                category: "Kesamaan Rasio",
+                question: "Rasio mana di bawah ini yang senilai / setara dengan 3 : 5?",
+                options: ["6 : 10", "5 : 3", "9 : 12", "6 : 8"],
+                answer: 0,
+                explanation: "Jika 3 : 5 dikalikan 2, didapatkan (3×2) : (5×2) = 6 : 10."
+            },
+            {
+                id: 8,
+                category: "Konsep Rasio",
+                question: "Rasio jumlah siswa laki-laki dan perempuan di kelas VI SD Negeri Lampahungin adalah 1 : 2. Pernyataan yang benar adalah...",
+                options: [
+                    "Setiap 1 siswa laki-laki dibandingkan dengan 2 siswa perempuan",
+                    "Jumlah siswa laki-laki lebih banyak dari perempuan",
+                    "Jumlah siswa laki-laki ada 1 orang",
+                    "Siswa perempuan berjumlah 2 orang"
+                ],
+                answer: 0,
+                explanation: "Rasio 1 : 2 berarti perbandingan kelompok pertama (laki-laki) terhadap kelompok kedua (perempuan) adalah 1 dibanding 2."
+            },
+            {
+                id: 9,
+                category: "Bentuk Pecahan",
+                question: "Bentuk sederhana dari rasio pecahan 10/15 adalah...",
+                options: ["1/3", "2/3", "3/2", "2/5"],
+                answer: 1,
+                explanation: "Membagi pembilang dan penyebut dengan 5: (10÷5) / (15÷5) = 2/3."
+            },
+            {
+                id: 10,
+                category: "Soal Cerita",
+                question: "Ibu membeli 5 kg beras dan 10 kg gula. Rasio paling sederhana berat beras dibanding gula adalah...",
+                options: ["1 : 2", "2 : 1", "1 : 5", "5 : 8"],
+                answer: 0,
+                explanation: "5 : 10 disederhanakan dengan membagi 5 menjadi 1 : 2."
+            },
+            {
+                id: 11,
+                category: "Tabel Rasio",
+                question: "Rasio 1 : 4 jika dikalikan dengan 3 pada kedua bilangannya akan menghasilkan rasio setara yaitu...",
+                options: ["3 : 12", "3 : 7", "4 : 12", "3 : 4"],
+                answer: 0,
+                explanation: "(1 × 3) : (4 × 3) = 3 : 12."
+            },
+            {
+                id: 12,
+                category: "Kesamaan Rasio",
+                question: "Manakah pasangan rasio berikut yang memiliki nilai SETARA?",
+                options: ["5 : 7 dan 10 : 14", "2 : 3 dan 4 : 5", "1 : 2 dan 3 : 4", "3 : 5 dan 5 : 3"],
+                answer: 0,
+                explanation: "5:7 setara dengan 10:14 karena dikalikan dengan faktor yang sama yaitu 2."
+            },
+            {
+                id: 13,
+                category: "Menyederhanakan Rasio",
+                question: "Bentuk paling sederhana dari perbandingan 12 : 16 adalah...",
+                options: ["3 : 4", "4 : 3", "2 : 3", "6 : 8"],
+                answer: 0,
+                explanation: "Membagi kedua angka dengan FPB-nya (4): (12÷4) : (16÷4) = 3 : 4."
+            },
+            {
+                id: 14,
+                category: "Kesamaan Rasio",
+                question: "Jika A : B = 2 : 5 dan diketahui nilai A = 6, berapakah nilai B?",
+                options: ["10", "12", "15", "20"],
+                answer: 2,
+                explanation: "Nilai A berubah dari 2 menjadi 6 (dikalikan 3). Maka nilai B = 5 × 3 = 15."
+            },
+            {
+                id: 15,
+                category: "Konsep Benda",
+                question: "Dalam keranjang terdapat 8 bola hijau dan 12 bola kuning. Berapakah rasio sederhana bola hijau dibanding SELURUH bola?",
+                options: ["8 : 12", "2 : 5", "12 : 8", "2 : 3"],
+                answer: 1,
+                explanation: "Total seluruh bola = 8 + 12 = 20. Rasio bola hijau (8) dibanding seluruh bola (20) = 8 : 20. Disederhanakan (dibagi 4) menjadi 2 : 5."
+            },
+            {
+                id: 16,
+                category: "Aturan Rasio",
+                question: "Cara membuat tabel rasio atau menentukan kesamaan rasio adalah dengan...",
+                options: [
+                    "Mengalikan atau membagi kedua bilangan dengan angka yang sama",
+                    "Menambahkan angka 2 di setiap bilangan",
+                    "Mengurangi bilangan pertama saja",
+                    "Membagi dengan angka nol"
+                ],
+                answer: 0,
+                explanation: "Kesamaan rasio didapatkan dengan mengalikan atau membagi kedua bagian rasio dengan bilangan yang sama."
+            },
+            {
+                id: 17,
+                category: "Soal Cerita",
+                question: "Andi memiliki 3 pulpen dan 9 buku tulis. Rasio paling sederhana pulpen dibanding buku tulis adalah...",
+                options: ["1 : 3", "3 : 1", "1 : 9", "3 : 3"],
+                answer: 0,
+                explanation: "3 : 9 disederhanakan dengan membagi 3 menjadi 1 : 3."
+            },
+            {
+                id: 18,
+                category: "Menyederhanakan Rasio",
+                question: "Sederhanakan rasio 15 : 25 dengan membagi kedua angka dengan bilangan 5!",
+                options: ["3 : 5", "5 : 3", "3 : 25", "1 : 5"],
+                answer: 0,
+                explanation: "(15 ÷ 5) : (25 ÷ 5) = 3 : 5."
+            },
+            {
+                id: 19,
+                category: "Konsep Dasar",
+                question: "Secara umum, kegunaan rasio dalam Matematika adalah untuk...",
+                options: [
+                    "Membandingkan dua besaran atau kelompok benda",
+                    "Menjumlahkan dua buah benda",
+                    "Mengurangi nilai bilangan berpangkat",
+                    "Menghitung keliling persegi"
+                ],
+                answer: 0,
+                explanation: "Rasio adalah konsep matematika dasar untuk membandingkan dua besaran."
+            },
+            {
+                id: 20,
+                category: "Tabel Rasio",
+                question: "Perhatikan tabel rasio: [1:3, 2:6, 3:9, 4:12, 5:Y]. Berapakah nilai Y?",
+                options: ["12", "15", "18", "20"],
+                answer: 1,
+                visual: `<div class="p-3 bg-emerald-50 rounded-xl text-center text-sm font-bold text-emerald-900">
+                            1 : 3 = 2 : 6 = 3 : 9 = 4 : 12 = 5 : <span class="bg-amber-200 px-2 py-0.5 rounded text-red-600">Y</span>
+                        </div>`,
+                explanation: "Pola kelipatan 3: (1×3=3, 2×3=6, 3×3=9, 4×3=12, 5×3=15). Nilai Y adalah 15."
+            }
+        ];
+
+        // ==========================================
+        // APP STATE & GAME LOGIC
+        // ==========================================
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = []; // Store user responses for review
+
+        function switchView(viewId) {
+            const views = ['viewHome', 'viewMaterial', 'viewQuiz', 'viewResult'];
+            views.forEach(v => {
+                const el = document.getElementById(v);
+                if (v === viewId) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startGame() {
+            initAudioContext();
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            switchView('viewQuiz');
+            renderQuestion();
+        }
+
+        function confirmExitGame() {
+            if (confirm("Apakah kamu yakin ingin keluar dari game? Kemajuan kamu saat ini tidak akan disimpan.")) {
+                switchView('viewHome');
+            }
+        }
+
+        function renderQuestion() {
+            const q = quizQuestions[currentQuestionIndex];
+
+            // Progress Update
+            document.getElementById('quizProgressText').innerText = `Soal ${currentQuestionIndex + 1} dari ${quizQuestions.length}`;
+            const progressPercent = ((currentQuestionIndex) / quizQuestions.length) * 100;
+            document.getElementById('quizProgressBar').style.width = `${progressPercent}%`;
+            document.getElementById('quizScoreText').innerText = score;
+
+            // Question Details
+            document.getElementById('questionCategory').innerText = q.category;
+            document.getElementById('questionText').innerText = q.question;
+
+            // Visual Area
+            const visualEl = document.getElementById('questionVisual');
+            if (q.visual) {
+                visualEl.innerHTML = q.visual;
+                visualEl.classList.remove('hidden');
+            } else {
+                visualEl.classList.add('hidden');
+                visualEl.innerHTML = '';
+            }
+
+            // Options Rendering
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "btn-bounce bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-400 text-slate-800 font-semibold p-4 rounded-2xl text-left text-sm sm:text-base flex items-center gap-3 transition shadow-sm";
+                
+                const letterBadge = String.fromCharCode(65 + idx); // A, B, C, D
+                btn.innerHTML = `
+                    <span class="bg-white text-slate-700 w-8 h-8 rounded-xl border border-slate-300 flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                        ${letterBadge}
+                    </span>
+                    <span>${opt}</span>
+                `;
+                btn.onclick = () => selectOption(idx);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedIndex) {
+            const q = quizQuestions[currentQuestionIndex];
+            const isCorrect = selectedIndex === q.answer;
+
+            // Save Response
+            userAnswers.push({
+                questionId: q.id,
+                selectedIndex: selectedIndex,
+                isCorrect: isCorrect
+            });
+
+            // Disable option buttons during feedback
+            const container = document.getElementById('optionsContainer');
+            const buttons = container.querySelectorAll('button');
+            buttons.forEach(b => b.disabled = true);
+
+            // Highlight chosen option
+            buttons[selectedIndex].classList.remove('bg-slate-50', 'border-slate-200');
+            if (isCorrect) {
+                buttons[selectedIndex].classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+                score += 5; // 20 questions * 5 = 100 max score
+                playSFX('correct');
+                speakFeedback("Kamu benar");
+            } else {
+                buttons[selectedIndex].classList.add('bg-red-100', 'border-red-400', 'text-red-900');
+                // Also highlight correct answer
+                buttons[q.answer].classList.remove('bg-slate-50', 'border-slate-200');
+                buttons[q.answer].classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-900');
+                playSFX('wrong');
+                speakFeedback("Belum tepat");
+            }
+
+            // Update top bar score
+            document.getElementById('quizScoreText').innerText = score;
+
+            // Timeout before next question
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizQuestions.length) {
+                    renderQuestion();
+                } else {
+                    finishGame();
+                }
+            }, 1600);
+        }
+
+        function finishGame() {
+            switchView('viewResult');
+
+            // Set final score & percentage
+            document.getElementById('finalScoreVal').innerText = score;
+            const correctCount = userAnswers.filter(a => a.isCorrect).length;
+            const percentage = Math.round((correctCount / quizQuestions.length) * 100);
+            document.getElementById('finalPercentageText').innerText = `Menjawab benar ${correctCount} dari ${quizQuestions.length} soal (${percentage}%)`;
+
+            // Star Rating Calculation
+            const starsContainer = document.getElementById('starsContainer');
+            let starsHTML = '';
+            let motivation = '';
+
+            if (score >= 80) {
+                starsHTML = '⭐ ⭐ ⭐';
+                motivation = '🎉 Luar Biasa! Kamu sangat menguasai konsep Rasio!';
+            } else if (score >= 60) {
+                starsHTML = '⭐ ⭐ ⚪';
+                motivation = '👍 Bagus Sekali! Pelajari lagi beberapa soal untuk nilai sempurna!';
+            } else {
+                starsHTML = '⭐ ⚪ ⚪';
+                motivation = '💪 Tetap Semangat! Yuk baca kembali ringkasan materi dan coba lagi!';
+            }
+            starsContainer.innerHTML = starsHTML;
+            document.getElementById('finalMotivationText').innerText = motivation;
+
+            // Generate Full Review
+            renderReviewList();
+        }
+
+        function renderReviewList() {
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviewContainer.innerHTML = '';
+
+            quizQuestions.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = userAns ? userAns.isCorrect : false;
+                const userChoiceText = userAns ? q.options[userAns.selectedIndex] : "Tidak dijawab";
+                const correctChoiceText = q.options[q.answer];
+
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-2xl border ${isCorrect ? 'bg-emerald-50/60 border-emerald-200' : 'bg-red-50/60 border-red-200'} space-y-2`;
+
+                card.innerHTML = `
+                    <div class="flex items-start justify-between gap-2">
+                        <span class="font-bold text-xs sm:text-sm ${isCorrect ? 'text-emerald-800' : 'text-red-800'}">
+                            No. ${idx + 1} (${q.category})
+                        </span>
+                        <span class="text-xs font-extrabold px-2 py-0.5 rounded-full ${isCorrect ? 'bg-emerald-200 text-emerald-900' : 'bg-red-200 text-red-900'}">
+                            ${isCorrect ? '✓ Benar (+5)' : '✗ Salah'}
+                        </span>
+                    </div>
+                    <p class="font-semibold text-slate-800 text-xs sm:text-sm">${q.question}</p>
+                    <div class="text-xs space-y-1 pt-1">
+                        <p class="${isCorrect ? 'text-emerald-700 font-medium' : 'text-red-700'}">
+                             Jawaban Kamu: <strong>${userChoiceText}</strong>
+                        </p>
+                        ${!isCorrect ? `<p class="text-emerald-800 font-semibold"> Jawaban Benar: <strong>${correctChoiceText}</strong></p>` : ''}
+                        <div class="mt-2 bg-white/80 p-2.5 rounded-xl border border-slate-200/80 text-slate-600 italic">
+                            💡 <strong>Pembahasan:</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+                reviewContainer.appendChild(card);
+            });
+        }
+
+        // Initialize user interaction trigger for Audio Context
+        document.addEventListener('click', function() {
+            initAudioContext();
+        }, { once: true });
+    </script>
+</body>
+</html>
